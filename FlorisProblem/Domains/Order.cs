@@ -10,6 +10,7 @@ namespace FlorisProblem
         public Order()
         {
             CloserFlorists = new List<FloristDistance>();
+            Florist = new Florist();
         }
         public int Id { get; set; }
         public double Latitude { get; set; }

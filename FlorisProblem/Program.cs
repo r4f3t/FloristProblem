@@ -31,11 +31,12 @@ namespace FlorisProblem
                     florist.Name = workSheet.Cells[rowIterator, 1].Value != null ? workSheet.Cells[rowIterator, 1].Value.ToString() : string.Empty;
                     florist.Latitude = workSheet.Cells[rowIterator, 2].Value != null ? Convert.ToDouble(workSheet.Cells[rowIterator, 2].Value.ToString().Replace(".",",")) : 0;
                     florist.Longitude = workSheet.Cells[rowIterator, 3].Value != null ? Convert.ToDouble(workSheet.Cells[rowIterator, 3].Value.ToString().Replace(".",",")) : 0;
+                    Console.WriteLine(florist.Name+" İçin Aralık Giriniz 0-99999:");
+                    string entry = Console.ReadLine();
+                    florist.MinVal =Convert.ToInt32(entry.Split('-')[0]);
+                    florist.MaxVal = Convert.ToInt32(entry.Split('-')[1]);
                     florists.Add(florist);
-
-                   
                     // ListExcel.Items.Add($"{urun.Kod1}<---> {urun.Kod2}");
-
                 }
                 List<Order> orders = new List<Order>();
                 workSheet = currentSheet[1];
@@ -45,21 +46,30 @@ namespace FlorisProblem
                 {
                     var order = new Order();
                     order.Id = workSheet.Cells[rowIterator, 1].Value != null ? Convert.ToInt32(workSheet.Cells[rowIterator, 1].Value.ToString()) : 0;
-
                     order.Latitude = workSheet.Cells[rowIterator, 2].Value != null ? Convert.ToDouble(workSheet.Cells[rowIterator, 2].Value.ToString().Replace(".", ",")) : 0;
                     order.Longitude = workSheet.Cells[rowIterator, 3].Value != null ? Convert.ToDouble(workSheet.Cells[rowIterator, 3].Value.ToString().Replace(".", ",")) : 0;
                     FillClosest(order,florists);
                     orders.Add(order);
-                    
-
                     // ListExcel.Items.Add($"{urun.Kod1}<---> {urun.Kod2}");
-
                 }
+                int kirmizi = 0, yesil = 0, mavi = 0;
                 foreach (var item in orders)
                 {
                     Console.WriteLine("Sip No="+item.Id+" Florist="+item.Florist.Name+" Distance="+item.GetCloserFloristDistance());
+                    if (item.Florist.Name=="Kırmızı ")
+                    {
+                        kirmizi++;
+                    }
+                    else if (item.Florist.Name == "Yeşil")
+                    {
+                        yesil++;
+                    }
+                    else
+                    {
+                        mavi++;
+                    }
                 }
-
+                Console.WriteLine("Kırmızı="+kirmizi+" Yeşil="+yesil+" Mavi="+mavi );
             }
             Console.ReadLine();
         }
@@ -72,12 +82,23 @@ namespace FlorisProblem
                 order.CloserFlorists.Add(new FloristDistance() {Florist=item,Distance=dist });
             }
             order.CloserFlorists=order.CloserFlorists.OrderBy(x=>x.Distance).ToList();
-            order.Florist = order.CloserFlorists.Take(1).Single().Florist;
+            foreach (var item in order.CloserFlorists)
+            {
+                if (item.Florist.OrderCount<item.Florist.MaxVal)
+                {
+                    order.Florist = item.Florist;
+                    florists.Where(x => x == item.Florist).Single().OrderCount++;
+                    break;
+                }
+            }
+            //order.Florist = order.CloserFlorists.Take(1).Single().Florist;
             return new Florist();
         }
+        
         public static double GetDistance(double y1,double x1,double y2,double x2)
         {
-            return Math.Sqrt(Math.Abs(Math.Pow(y2, 2) - Math.Pow(y1, 2))) + Math.Sqrt(Math.Abs(Math.Pow(x2, 2) - Math.Pow(x1, 2)));
+            return Math.Sqrt(Math.Pow(y2 - y1, 2)+ Math.Pow(x2-x1, 2));
         }
+       
     }
 }
