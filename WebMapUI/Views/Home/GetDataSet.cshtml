@@ -1,0 +1,12 @@
+﻿
+@{
+    ViewBag.Title = "GetDataSet";
+}
+
+<h2>GetDataSet</h2>
+@using (Html.BeginForm("MapView", "Home", FormMethod.Post,
+                              new { enctype = "multipart/form-data" }))
+{
+<input type="file" name="filePath"  />
+<input type="submit" value="Send Data" />
+}

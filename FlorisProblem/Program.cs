@@ -53,6 +53,7 @@ namespace FlorisProblem
                     // ListExcel.Items.Add($"{urun.Kod1}<---> {urun.Kod2}");
                 }
                 int kirmizi = 0, yesil = 0, mavi = 0;
+                double totalDistance = 0;
                 foreach (var item in orders)
                 {
                     Console.WriteLine("Sip No="+item.Id+" Florist="+item.Florist.Name+" Distance="+item.GetCloserFloristDistance());
@@ -68,8 +69,12 @@ namespace FlorisProblem
                     {
                         mavi++;
                     }
+                    totalDistance += item.GetCloserFloristDistance();
                 }
                 Console.WriteLine("Kırmızı="+kirmizi+" Yeşil="+yesil+" Mavi="+mavi );
+                Console.WriteLine("Toplam Katedilen Yol="+totalDistance);
+
+
             }
             Console.ReadLine();
         }

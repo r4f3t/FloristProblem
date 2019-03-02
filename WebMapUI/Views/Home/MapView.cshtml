@@ -1,0 +1,59 @@
+﻿@model WebMapUI.Models.FloristOrderVM
+@{
+    ViewBag.Title = "MapView";
+}
+
+<title>@ViewBag.Title</title>
+
+
+<fieldset>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    @{ string florisArray = "";}
+    @foreach (var item in Model.Florists)
+    {
+        
+        florisArray += "var pos" + item.Name.Trim(' ') + "=new google.maps.LatLng(" + item.Latitude.ToString().Replace(",", ".") + "," + item.Longitude.ToString().Replace(",", ".") + ");";
+        florisArray += "var marker" + item.Name.Trim(' ') + "=new google.maps.Marker({ position: pos" + item.Name + ",icon:cicek });";
+        florisArray += "marker" + item.Name.Trim(' ') + ".setMap(map);";
+        
+    }
+    @{ string OrderArray = "";}
+    @foreach (var item in Model.Orders)
+    {
+        florisArray += "var pos" + item.Id + "=new google.maps.LatLng(" + item.Latitude.ToString().Replace(",", ".") + "," + item.Longitude.ToString().Replace(",", ".") + ");";
+        florisArray += "var marker" + item.Id + "=new google.maps.Marker({ position: pos" + item.Id + ",icon:"+item.Renk.Replace(" ","")+" });";
+        florisArray += "marker" + item.Id + ".setMap(map);";
+    }
+
+    @{
+      
+    }
+    <div id="googleMap" style="height:900px;width:100%;"></div>
+    <script>
+        function myMap() {
+            var myCenter = new google.maps.LatLng(41.049792, 29.003031);
+            var Kırmızı = "../../icons/Kırmızı.png";
+            var Yeşil = "../../icons/Yeşil.png";
+            var Mavi = "../../icons/Mavi.png";
+            var cicek = "../../icons/cicek.png";
+
+
+
+            var mapProp = { center: myCenter, zoom: 14, scrollwheel: true, draggable: true, mapTypeId: google.maps.MapTypeId.ROADMAP };
+            var map = new google.maps.Map(document.getElementById("googleMap"), mapProp);
+          
+            @HttpUtility.JavaScriptStringEncode(florisArray)
+            @OrderArray
+            
+
+        }
+
+
+    </script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDPdLR1u1gtJyggLBFcTB-KqzfeL1Gj3YE&callback=myMap"></script>
+</fieldset>
