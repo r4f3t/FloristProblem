@@ -1,0 +1,26 @@
+﻿[
+  {
+    "BayiKod": 0,
+    "BayiAdi": "Kırmızı ",
+    "Latitude": 41.049792,
+    "Longitude": 29.003031,
+    "MinSip": 20,
+    "MaxSip": 30
+  },
+  {
+    "BayiKod": 1,
+    "BayiAdi": "Yeşil",
+    "Latitude": 41.06994,
+    "Longitude": 29.01925,
+    "MinSip": 35,
+    "MaxSip": 50
+  },
+  {
+    "BayiKod": 2,
+    "BayiAdi": "Mavi",
+    "Latitude": 41.049997,
+    "Longitude": 29.026108,
+    "MinSip": 20,
+    "MaxSip": 80
+  }
+]
