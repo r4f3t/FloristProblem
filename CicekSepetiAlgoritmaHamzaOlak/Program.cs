@@ -11,11 +11,11 @@ namespace CicekSepetiAlgoritma
     {
         static void Main(string[] args)
         {
-            string BayiJson = File.ReadAllText("/Users/hamzaolak/Documents/Ar-ge Projeleri/C#/CSharpBlankSolution/CicekSepetiAlgoritma/JSON/Bayi.json");
+            string BayiJson = File.ReadAllText(@"C:\Users\Rafet\source\repos\FlorisProblem\CicekSepetiAlgoritmaHamzaOlak\JSON\Bayi.json");
             List<Bayi> BayiList = JsonConvert.DeserializeObject<List<Bayi>>(BayiJson);
 
 
-            string SiparisJson = File.ReadAllText("/Users/hamzaolak/Documents/Ar-ge Projeleri/C#/CSharpBlankSolution/CicekSepetiAlgoritma/JSON/Siparis.json");
+            string SiparisJson = File.ReadAllText(@"C:\Users\Rafet\source\repos\FlorisProblem\CicekSepetiAlgoritmaHamzaOlak\JSON\Siparis.json");
             List<Siparis> SiparisList = JsonConvert.DeserializeObject<List<Siparis>>(SiparisJson);
 
             List<SiparisMinUzaklik> SiparisMinUzaklikList = new List<SiparisMinUzaklik>();
